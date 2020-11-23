@@ -37,8 +37,15 @@ class DogSearchViewModel {
         }
     }
     
-    func searchDogs(for name: String, limit: String, page: String, order: String) {
-        let parameters: DogSearchRequest = ["q": name, "limit": limit, "page": page, "order": order]
+    private var dogSearchResponse: DogSearchResponse? {
+        didSet {
+            viewHandler?(.reloadData)
+        }
+    }
+    
+    func searchDogs(for name: String) {
+//        , limit: String, page: String, order: String
+        let parameters: DogSearchRequest = ["q": name, "limit": "10", "page": "1", "order": "DESC"]
         guard let apiService = apiService else {self.alertMessage = "API is nil"; return}
         
         if self.isLoading { return }
@@ -53,5 +60,13 @@ class DogSearchViewModel {
                 self.alertMessage = error.rawValue
             }
         })
+    }
+    
+    var dogsRowCount: Int {
+        return dogSearchResponse?.count ?? 0
+    }
+    
+    func getDogData(at indexPath: Int) -> DogSearchResponseElement? {
+        return dogSearchResponse?[safe: indexPath]
     }
 }

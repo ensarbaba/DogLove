@@ -19,6 +19,15 @@
 		EC863B93256ACE2D009602D6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863B92256ACE2D009602D6 /* Reachability.swift */; };
 		EC863B9C256ACFA2009602D6 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863B9B256ACFA2009602D6 /* APIError.swift */; };
 		EC863BA1256AD265009602D6 /* DogSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BA0256AD265009602D6 /* DogSearchResponse.swift */; };
+		EC863BB5256C3FBF009602D6 /* DogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BB4256C3FBF009602D6 /* DogView.swift */; };
+		EC863BBA256C3FC8009602D6 /* DogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC863BB9256C3FC8009602D6 /* DogView.xib */; };
+		EC863BC0256C42D8009602D6 /* DogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BBE256C42D8009602D6 /* DogCell.swift */; };
+		EC863BC1256C42D8009602D6 /* DogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC863BBF256C42D8009602D6 /* DogCell.xib */; };
+		EC863BC7256C5235009602D6 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BC6256C5235009602D6 /* UIViewController+Extensions.swift */; };
+		EC863BCC256C5243009602D6 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BCB256C5243009602D6 /* UIView+Extensions.swift */; };
+		EC863BD1256C5252009602D6 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BD0256C5252009602D6 /* Array+Extensions.swift */; };
+		EC863BD6256C525D009602D6 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BD5256C525D009602D6 /* UITableView+Extensions.swift */; };
+		EC863BDB256C526A009602D6 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BDA256C526A009602D6 /* NSObject+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +66,15 @@
 		EC863B92256ACE2D009602D6 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		EC863B9B256ACFA2009602D6 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		EC863BA0256AD265009602D6 /* DogSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogSearchResponse.swift; sourceTree = "<group>"; };
+		EC863BB4256C3FBF009602D6 /* DogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogView.swift; sourceTree = "<group>"; };
+		EC863BB9256C3FC8009602D6 /* DogView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DogView.xib; sourceTree = "<group>"; };
+		EC863BBE256C42D8009602D6 /* DogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogCell.swift; sourceTree = "<group>"; };
+		EC863BBF256C42D8009602D6 /* DogCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DogCell.xib; sourceTree = "<group>"; };
+		EC863BC6256C5235009602D6 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		EC863BCB256C5243009602D6 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		EC863BD0256C5252009602D6 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		EC863BD5256C525D009602D6 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
+		EC863BDA256C526A009602D6 /* NSObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +127,7 @@
 			children = (
 				EC863B71256A9B92009602D6 /* API */,
 				EC863B75256A9B9F009602D6 /* AppDelegate */,
+				EC863BC5256C5224009602D6 /* Extensions */,
 				EC863B76256A9BA4009602D6 /* Model */,
 				EC863B77256A9BAA009602D6 /* Modules */,
 				EC863B78256A9BBD009602D6 /* Resources */,
@@ -166,6 +185,7 @@
 			children = (
 				EC863B80256ACDA1009602D6 /* DogSearchController.swift */,
 				EC863B88256ACDBD009602D6 /* DogSearchViewModel.swift */,
+				EC863BB3256C3F0A009602D6 /* View */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -186,6 +206,29 @@
 				EC863B44256A9B8B009602D6 /* Main.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		EC863BB3256C3F0A009602D6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EC863BB4256C3FBF009602D6 /* DogView.swift */,
+				EC863BB9256C3FC8009602D6 /* DogView.xib */,
+				EC863BBE256C42D8009602D6 /* DogCell.swift */,
+				EC863BBF256C42D8009602D6 /* DogCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EC863BC5256C5224009602D6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EC863BC6256C5235009602D6 /* UIViewController+Extensions.swift */,
+				EC863BCB256C5243009602D6 /* UIView+Extensions.swift */,
+				EC863BD0256C5252009602D6 /* Array+Extensions.swift */,
+				EC863BD5256C525D009602D6 /* UITableView+Extensions.swift */,
+				EC863BDA256C526A009602D6 /* NSObject+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +335,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC863B4B256A9B8C009602D6 /* LaunchScreen.storyboard in Resources */,
+				EC863BC1256C42D8009602D6 /* DogCell.xib in Resources */,
+				EC863BBA256C3FC8009602D6 /* DogView.xib in Resources */,
 				EC863B48256A9B8C009602D6 /* Assets.xcassets in Resources */,
 				EC863B46256A9B8B009602D6 /* Main.storyboard in Resources */,
 			);
@@ -320,11 +365,18 @@
 			files = (
 				EC863B81256ACDA1009602D6 /* DogSearchController.swift in Sources */,
 				EC863B89256ACDBD009602D6 /* DogSearchViewModel.swift in Sources */,
+				EC863BC7256C5235009602D6 /* UIViewController+Extensions.swift in Sources */,
+				EC863BC0256C42D8009602D6 /* DogCell.swift in Sources */,
 				EC863BA1256AD265009602D6 /* DogSearchResponse.swift in Sources */,
 				EC863B3F256A9B8B009602D6 /* AppDelegate.swift in Sources */,
 				EC863B93256ACE2D009602D6 /* Reachability.swift in Sources */,
+				EC863BD1256C5252009602D6 /* Array+Extensions.swift in Sources */,
+				EC863BD6256C525D009602D6 /* UITableView+Extensions.swift in Sources */,
+				EC863BDB256C526A009602D6 /* NSObject+Extensions.swift in Sources */,
+				EC863BB5256C3FBF009602D6 /* DogView.swift in Sources */,
 				EC863B8E256ACE1B009602D6 /* APIClient.swift in Sources */,
 				EC863B9C256ACFA2009602D6 /* APIError.swift in Sources */,
+				EC863BCC256C5243009602D6 /* UIView+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
