@@ -28,16 +28,39 @@ class DogSearchController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        initViewModel()
     }
     
     private func configureUI() {
         searchBar.delegate = self
         searchBar.placeholder = "Search for a breed"
+        tableView.registerCellWithReuseIdentifier(DogCell.reuseIdentifier)
         tableView.dataSource = self
+        tableView.delegate = self
     }
     
     private func initViewModel() {
-        
+        viewModel.viewHandler = { [weak self] (viewAction) in
+            guard let self = self else { return }
+            switch viewAction {
+            case .reloadData:
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .insertRows(let rows):
+                DispatchQueue.main.async {
+                    self.tableView.insertRows(at: rows, with: .automatic)
+                }
+            case .requestInProgress(let progress):
+                DispatchQueue.main.async {
+                    self.activityIndicator.isHidden = !progress
+                    progress ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+                }
+            case .showMessage(let message):
+                self.showAlert(message)
+            }
+        }
     }
     
     @objc func searchFor() {
@@ -69,6 +92,38 @@ extension DogSearchController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
+}
+
+extension DogSearchController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let imageRatio = viewModel.getImageRatio(at: indexPath.row)
+        return tableView.frame.width / imageRatio
+    }
+    // MARK: Pagination Start
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if viewModel.hasNeedToFetchMoreDog && viewModel.dogsRowCount == indexPath.row + 1  {
+            guard let searchText = searchBar.text else { return }
+                viewModel.searchDogs(for: searchText)
+        }
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > tableView.contentSize.height-scrollView.frame.size.height-100 && viewModel.hasNeedToFetchMoreDog {
+            let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: view.frame.size.width/2, y: 25, width: 15, height: 15))
+            let footerView = UIView()
+            footerView.backgroundColor = .gray
+            activityIndicator.startAnimating()
+            footerView.addSubview(activityIndicator)
+            DispatchQueue.main.async {
+                self.tableView.tableFooterView = footerView
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.tableView.tableFooterView = nil
+            }
+        }
+    }
+    // MARK: Pagination End
 }
 
 extension DogSearchController: UISearchBarDelegate {

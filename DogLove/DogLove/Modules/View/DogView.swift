@@ -11,11 +11,18 @@ class DogView: UIView {
 
     @IBOutlet weak private var imageView: UIImageView!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setupFromNib()
+    }
+    
+    func update(with item: DogSearchResponseElement) {
+        guard let url = item.url else { return }
+        ImageLoader.shared.obtainImageWithPath(imagePath: url) { [weak self] (image) in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
     }
 }

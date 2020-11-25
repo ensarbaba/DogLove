@@ -8,13 +8,10 @@
 import UIKit
 
 class DogCell: UITableViewCell {
-
-    
     @IBOutlet weak private var separatorView: UIView!
     @IBOutlet weak private var dogView: DogView!
     
     func update(with item: DogSearchResponseElement) {
-        
+        dogView.update(with: item)
     }
-
 }
