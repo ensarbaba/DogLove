@@ -33,14 +33,16 @@ class APIClient: APIClientProtocol {
 
     /* Storing hardcoded api key is not a good approach, we're doing this because it's a code case only */
     private let apiKey = "9bb6d9bd-f4c1-461b-a5ca-205020430d6f"
-    
+    private let baseUrl = "api.thedogapi.com"
+    /// urlComponents for composing request url
     var urlComponents: URLComponents {
          var urlComponents = URLComponents()
          urlComponents.scheme = "https"
-         urlComponents.host = "api.thedogapi.com"
+         urlComponents.host = baseUrl
          return urlComponents
      }
     
+    /// API function for searching dogs by name
     public func searchDogs(params: DogSearchRequest, method: APIMethod, endPoint: EndPoint, completed: @escaping (Result<DogSearchResponse, APIError>) -> Void) {
 
         var urlComponents = self.urlComponents
@@ -48,15 +50,20 @@ class APIClient: APIClientProtocol {
         urlComponents.setQueryItems(with: params)
     
         guard let url = urlComponents.url else {
-            completed(.failure(.apiError))
+            completed(.failure(.urlError))
             return
         }
         call(url: url, method: .GET, completion: completed)
     }
     
+    /// Generic API call function
+    /// - Parameter url: The request url want to call
+    /// - Parameter method: The request method you call for
+    /// - Parameter completion: Capturing result type response
+    /// - Returns: Result<T, APIError>  which either returns Generic response model T or APIError that conforms to Error
     private func call<T: Decodable>(url: URL, method: APIMethod, completion: @escaping (Result<T, APIError>) -> Void) {
         if !Reachability.isConnectedToNetwork() {
-            completion(.failure(.apiError))
+            completion(.failure(.connectionError))
         }
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
@@ -69,12 +76,12 @@ class APIClient: APIClientProtocol {
         
                     guard let statusCode = (response as? HTTPURLResponse)?.statusCode, 200..<299 ~= statusCode
                     else {
-                        completion(.failure(.apiError))
+                        completion(.failure(.statusCodeError))
                         return
                     }
         
                     guard let data = data else {
-                        completion(.failure(.apiError))
+                        completion(.failure(.nilDataError))
                         return
                     }
         
@@ -82,7 +89,7 @@ class APIClient: APIClientProtocol {
                         let mappedObject = try JSONDecoder().decode(T.self, from: data)
                         completion(.success(mappedObject))
                     } catch {
-                        completion(.failure(.apiError))
+                        completion(.failure(.mapError))
                     }
         }.resume()
     }

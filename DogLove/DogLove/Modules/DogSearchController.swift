@@ -13,12 +13,12 @@ enum AppStoryboard: String {
 
 class DogSearchController: UIViewController {
 
+    // TableView Section Enum
     private enum Section: Int, CaseIterable {
         case dog
     }
     
     @IBOutlet weak private var tableView: UITableView!
-    @IBOutlet weak private var noDataLabel: UILabel!
     @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak private var searchBar: UISearchBar!
     
@@ -38,6 +38,7 @@ class DogSearchController: UIViewController {
         tableView.registerCellWithReuseIdentifier(DogCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        activityIndicator.hidesWhenStopped = true
     }
     
     private func initViewModel() {

@@ -40,20 +40,25 @@ class DogSearchViewModel {
     
     private var dogSearchResponse: DogSearchResponse?
     
+    
+    /// Search dogs by name
+    /// - Parameter name: The dog name for search
     func searchDogs(for name: String) {
-        let parameters: DogSearchRequest = ["q": name, "limit": "5", "page": "\(page)", "order": "DESC"]
+        let parameters: DogSearchRequest = ["q": name, "limit": "\(limit)", "page": "\(page)", "order": "DESC"]
         guard let apiService = apiService else {self.alertMessage = "API is nil"; return}
         
         if self.isLoading { return }
         self.isLoading = true
-        apiService.searchDogs(params: parameters, method: .GET, endPoint: .search, completed: { (result) in
+        apiService.searchDogs(params: parameters, method: .GET, endPoint: .search, completed: { [weak self] (result) in
+            guard let self = self else { return }
             defer { self.isLoading = false }
             switch result {
             case .success(let response):
+                // Initial Data Fetch
                 if self.dogSearchResponse == nil {
                     self.dogSearchResponse = response
                     self.viewHandler?(.reloadData)
-
+                // Subsequent data as user scrolls tableview
                 } else {
                     let lastIndex = (self.dogSearchResponse?.count)!-1
                     self.dogSearchResponse?.append(contentsOf: response)
@@ -72,18 +77,21 @@ class DogSearchViewModel {
         })
     }
     
+    // MARK: Pagination Data
     private var page = 0
-    
+    private var limit = 10
     var hasNeedToFetchMoreDog = false
 
+    // MARK: TableView Data Source
+    /// Number of rows
     var dogsRowCount: Int {
         return dogSearchResponse?.count ?? 0
     }
-    
+    /// Cell for row data
     func getDogData(at indexPath: Int) -> DogSearchResponseElement? {
         return dogSearchResponse?[safe: indexPath]
     }
-    
+    /// Image ratio for resizing cell
     func getImageRatio(at indexPath: Int) -> CGFloat {
         guard let item = dogSearchResponse?[safe: indexPath], let width = item.width, let height = item.height else { return 0 }
         return width/height

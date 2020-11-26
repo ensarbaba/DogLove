@@ -11,7 +11,6 @@
 		EC863B46256A9B8B009602D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC863B44256A9B8B009602D6 /* Main.storyboard */; };
 		EC863B48256A9B8C009602D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC863B47256A9B8C009602D6 /* Assets.xcassets */; };
 		EC863B4B256A9B8C009602D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC863B49256A9B8C009602D6 /* LaunchScreen.storyboard */; };
-		EC863B56256A9B8D009602D6 /* DogLoveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863B55256A9B8D009602D6 /* DogLoveTests.swift */; };
 		EC863B61256A9B8D009602D6 /* DogLoveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863B60256A9B8D009602D6 /* DogLoveUITests.swift */; };
 		EC863B81256ACDA1009602D6 /* DogSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863B80256ACDA1009602D6 /* DogSearchController.swift */; };
 		EC863B89256ACDBD009602D6 /* DogSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863B88256ACDBD009602D6 /* DogSearchViewModel.swift */; };
@@ -28,6 +27,8 @@
 		EC863BD1256C5252009602D6 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BD0256C5252009602D6 /* Array+Extensions.swift */; };
 		EC863BD6256C525D009602D6 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BD5256C525D009602D6 /* UITableView+Extensions.swift */; };
 		EC863BDB256C526A009602D6 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863BDA256C526A009602D6 /* NSObject+Extensions.swift */; };
+		EC88D938256EE20400EC991C /* APIClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC88D937256EE20400EC991C /* APIClientTest.swift */; };
+		EC88D93D256EE3E000EC991C /* DogSearchViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC88D93C256EE3E000EC991C /* DogSearchViewModelTest.swift */; };
 		ECAA5090256D89640082C3E9 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA508F256D89640082C3E9 /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +57,6 @@
 		EC863B4A256A9B8C009602D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC863B4C256A9B8C009602D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC863B51256A9B8D009602D6 /* DogLoveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogLoveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC863B55256A9B8D009602D6 /* DogLoveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoveTests.swift; sourceTree = "<group>"; };
 		EC863B57256A9B8D009602D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC863B5C256A9B8D009602D6 /* DogLoveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogLoveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC863B60256A9B8D009602D6 /* DogLoveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoveUITests.swift; sourceTree = "<group>"; };
@@ -76,6 +76,8 @@
 		EC863BD0256C5252009602D6 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		EC863BD5256C525D009602D6 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		EC863BDA256C526A009602D6 /* NSObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
+		EC88D937256EE20400EC991C /* APIClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTest.swift; sourceTree = "<group>"; };
+		EC88D93C256EE3E000EC991C /* DogSearchViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogSearchViewModelTest.swift; sourceTree = "<group>"; };
 		ECAA508F256D89640082C3E9 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,8 +143,9 @@
 		EC863B54256A9B8D009602D6 /* DogLoveTests */ = {
 			isa = PBXGroup;
 			children = (
-				EC863B55256A9B8D009602D6 /* DogLoveTests.swift */,
 				EC863B57256A9B8D009602D6 /* Info.plist */,
+				EC88D937256EE20400EC991C /* APIClientTest.swift */,
+				EC88D93C256EE3E000EC991C /* DogSearchViewModelTest.swift */,
 			);
 			path = DogLoveTests;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 					};
 					EC863B50256A9B8D009602D6 = {
 						CreatedOnToolsVersion = 12.1;
+						LastSwiftMigration = 1210;
 						TestTargetID = EC863B3A256A9B8B009602D6;
 					};
 					EC863B5B256A9B8D009602D6 = {
@@ -388,7 +392,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC863B56256A9B8D009602D6 /* DogLoveTests.swift in Sources */,
+				EC88D938256EE20400EC991C /* APIClientTest.swift in Sources */,
+				EC88D93D256EE3E000EC991C /* DogSearchViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,6 +601,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XC2925AXZ2;
 				INFOPLIST_FILE = DogLoveTests/Info.plist;
@@ -607,6 +613,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ensarbaba.DogLoveTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogLove.app/DogLove";
@@ -618,6 +625,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XC2925AXZ2;
 				INFOPLIST_FILE = DogLoveTests/Info.plist;
