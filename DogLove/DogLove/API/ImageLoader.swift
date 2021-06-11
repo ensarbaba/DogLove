@@ -9,9 +9,10 @@ import UIKit
 
 class ImageLoader {
     
-    var task: URLSessionDownloadTask!
-    var session: URLSession!
-    var cache: NSCache<NSString, UIImage>!
+    private var task: URLSessionDownloadTask?
+    private var session: URLSession?
+    private var cache: NSCache<NSString, UIImage>?
+    private var currentURL: String?
     
     static let shared = ImageLoader()
     
@@ -22,27 +23,37 @@ class ImageLoader {
     }
     
     func obtainImageWithPath(imagePath: String, completionHandler: @escaping (UIImage) -> ()) {
-        if let image = self.cache.object(forKey: imagePath as NSString) {
+        self.currentURL = imagePath
+        if let image = self.cache?.object(forKey: imagePath as NSString) {
             DispatchQueue.main.async {
                 completionHandler(image)
             }
         } else {
-            guard let placeholder = UIImage(named: "placeholder") else { return }
-            DispatchQueue.main.async {
-                completionHandler(placeholder)
-            }
-            let url: URL! = URL(string: imagePath)
-            task = session.downloadTask(with: url, completionHandler: { (location, response, error) in
-                if let data = try? Data(contentsOf: url) {
-                    let img: UIImage! = UIImage(data: data)
-                    self.cache.setObject(img, forKey: imagePath as NSString)
+            guard let url = URL(string: imagePath) else { return }
+            task = session?.downloadTask(with: url, completionHandler: { (location, response, error) in
+                
+                guard let data = try? Data(contentsOf: url), let img = UIImage(data: data) else { return }
+                if self.currentURL == imagePath {
                     DispatchQueue.main.async {
                         completionHandler(img)
                     }
                 }
+                
+                self.cache?.setObject(img, forKey: imagePath as NSString)
+                
             })
-            task.resume()
+            task?.resume()
         }
+    }
+    
+    func cancelLoadingImage() {
+        task?.cancel()
+        task = nil
+    }
+    
+    func setPlaceholderImage() -> UIImage? {
+        guard let placeholder = UIImage(named: "placeholder") else { return nil }
+        return placeholder
     }
 }
  

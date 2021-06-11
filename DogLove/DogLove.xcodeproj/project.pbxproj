@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC851D0E257CF2550037A0DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC851D0D257CF2550037A0DF /* Foundation.framework */; };
 		EC863B3F256A9B8B009602D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863B3E256A9B8B009602D6 /* AppDelegate.swift */; };
 		EC863B46256A9B8B009602D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC863B44256A9B8B009602D6 /* Main.storyboard */; };
 		EC863B48256A9B8C009602D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC863B47256A9B8C009602D6 /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		EC88D938256EE20400EC991C /* APIClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC88D937256EE20400EC991C /* APIClientTest.swift */; };
 		EC88D93D256EE3E000EC991C /* DogSearchViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC88D93C256EE3E000EC991C /* DogSearchViewModelTest.swift */; };
 		ECAA5090256D89640082C3E9 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA508F256D89640082C3E9 /* ImageLoader.swift */; };
+		ECECF24F26737B9E00D1982F /* AssociatedObjectHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECECF24E26737B9E00D1982F /* AssociatedObjectHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EC851D0D257CF2550037A0DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EC863B3B256A9B8B009602D6 /* DogLove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogLove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC863B3E256A9B8B009602D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC863B45256A9B8B009602D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 		EC88D937256EE20400EC991C /* APIClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTest.swift; sourceTree = "<group>"; };
 		EC88D93C256EE3E000EC991C /* DogSearchViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogSearchViewModelTest.swift; sourceTree = "<group>"; };
 		ECAA508F256D89640082C3E9 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		ECECF24E26737B9E00D1982F /* AssociatedObjectHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedObjectHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC851D0E257CF2550037A0DF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +111,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC851D0C257CF2550037A0DF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC851D0D257CF2550037A0DF /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EC863B32256A9B8A009602D6 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +126,7 @@
 				EC863B54256A9B8D009602D6 /* DogLoveTests */,
 				EC863B5F256A9B8D009602D6 /* DogLoveUITests */,
 				EC863B3C256A9B8B009602D6 /* Products */,
+				EC851D0C257CF2550037A0DF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,6 +143,7 @@
 		EC863B3D256A9B8B009602D6 /* DogLove */ = {
 			isa = PBXGroup;
 			children = (
+				ECECF24D26737B7200D1982F /* Helpers */,
 				EC863B71256A9B92009602D6 /* API */,
 				EC863B75256A9B9F009602D6 /* AppDelegate */,
 				EC863BC5256C5224009602D6 /* Extensions */,
@@ -235,6 +250,14 @@
 				EC863BDA256C526A009602D6 /* NSObject+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		ECECF24D26737B7200D1982F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				ECECF24E26737B9E00D1982F /* AssociatedObjectHelpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -372,6 +395,7 @@
 			files = (
 				EC863B81256ACDA1009602D6 /* DogSearchController.swift in Sources */,
 				EC863B89256ACDBD009602D6 /* DogSearchViewModel.swift in Sources */,
+				ECECF24F26737B9E00D1982F /* AssociatedObjectHelpers.swift in Sources */,
 				EC863BC7256C5235009602D6 /* UIViewController+Extensions.swift in Sources */,
 				EC863BC0256C42D8009602D6 /* DogCell.swift in Sources */,
 				EC863BA1256AD265009602D6 /* DogSearchResponse.swift in Sources */,

@@ -14,4 +14,9 @@ class DogCell: UITableViewCell {
     func update(with item: DogSearchResponseElement) {
         dogView.update(with: item)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        dogView.reuseCellCalled()
+    }
 }

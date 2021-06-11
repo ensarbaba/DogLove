@@ -30,6 +30,7 @@ class DogSearchController: UIViewController {
         super.viewDidLoad()
         configureUI()
         initViewModel()
+        addDoneButtonOnKeyboard()
     }
     
     private func configureUI() {
@@ -40,7 +41,23 @@ class DogSearchController: UIViewController {
         tableView.delegate = self
         activityIndicator.hidesWhenStopped = true
     }
+    private func addDoneButtonOnKeyboard(){
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        doneToolbar.barStyle = .default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+        
+        let items = [flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        searchBar.inputAccessoryView = doneToolbar
+    }
     
+    @objc func doneButtonAction(){
+        searchBar.resignFirstResponder()
+    }
     private func initViewModel() {
         viewModel.viewHandler = { [weak self] (viewAction) in
             guard let self = self else { return }
