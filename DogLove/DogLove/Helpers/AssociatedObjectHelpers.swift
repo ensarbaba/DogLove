@@ -7,7 +7,7 @@
 
 import Foundation
 
-func associatedObject<ObjectType: AnyObject>(base: AnyObject, key: UnsafePointer<UInt8>, initialValue: ObjectType? = nil) -> ObjectType? {
+func associatedObject<ObjectType: Any>(base: Any, key: UnsafePointer<UInt8>, initialValue: ObjectType? = nil) -> ObjectType? {
     if let associated = objc_getAssociatedObject(base, key) as? ObjectType { return associated }
     if let initialValue = initialValue {
         objc_setAssociatedObject(base, key, initialValue, .OBJC_ASSOCIATION_RETAIN)
@@ -15,6 +15,6 @@ func associatedObject<ObjectType: AnyObject>(base: AnyObject, key: UnsafePointer
     return initialValue
 }
 
-func associateObject<ObjectType: AnyObject> (base: AnyObject, key: UnsafePointer<UInt8>, value: ObjectType?) {
+func associateObject<ObjectType: Any> (base: Any, key: UnsafePointer<UInt8>, value: ObjectType?) {
     objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_RETAIN)
 }

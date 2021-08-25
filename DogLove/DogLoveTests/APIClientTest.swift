@@ -16,7 +16,7 @@ class APIClientTest: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
-        sut = APIClient.shared
+        sut = APIClient
     }
     
     override func tearDownWithError() throws {
@@ -33,7 +33,7 @@ class APIClientTest: XCTestCase {
         
         // When searching poiList
         let expect = XCTestExpectation(description: "callback")
-        let parameters: DogSearchRequest = ["q": name, "limit": "5", "page": "0", "order": "DESC"]
+        let parameters: DogSearchRequest = ["q": "terrier", "limit": "5", "page": "0", "order": "DESC"]
      
         sut.searchDogs(params: parameters, method: .GET, endPoint: .search) { (result) in
             expect.fulfill()

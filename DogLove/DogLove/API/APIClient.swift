@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol APIClientProtocol: class {
+protocol APIClientProtocol: AnyObject {
     func searchDogs(params: DogSearchRequest, method: APIMethod, endPoint: EndPoint, completed: @escaping (Result<DogSearchResponse, APIError>) -> Void)
 }
 
@@ -28,7 +28,6 @@ enum EndPoint: String {
 
 class APIClient: APIClientProtocol {
     
-    static let shared = APIClient()
     init() {}
 
     /* Storing hardcoded api key is not a good approach, we're doing this because it's a code case only */

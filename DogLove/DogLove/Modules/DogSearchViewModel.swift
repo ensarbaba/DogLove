@@ -18,11 +18,7 @@ class DogSearchViewModel {
         case showMessage(_ message: String)
     }
     
-    var apiService: APIClientProtocol?
-
-    init(apiService: APIClientProtocol = APIClient()) {
-        self.apiService = apiService
-    }
+    private lazy var apiService = APIClient()
     
     var viewHandler: ((ViewAction) -> Void)?
     
@@ -45,7 +41,6 @@ class DogSearchViewModel {
     /// - Parameter name: The dog name for search
     func searchDogs(for name: String) {
         let parameters: DogSearchRequest = ["q": name, "limit": "\(limit)", "page": "\(page)", "order": "DESC"]
-        guard let apiService = apiService else {self.alertMessage = "API is nil"; return}
         
         if self.isLoading { return }
         self.isLoading = true
@@ -60,7 +55,8 @@ class DogSearchViewModel {
                     self.viewHandler?(.reloadData)
                 // Subsequent data as user scrolls tableview
                 } else {
-                    let lastIndex = (self.dogSearchResponse?.count)!-1
+                    guard let totalCount = self.dogSearchResponse?.count else {return}
+                    let lastIndex = totalCount - 1
                     self.dogSearchResponse?.append(contentsOf: response)
                     var newIndices: [IndexPath] = [IndexPath]()
                     for index in 0..<response.count {

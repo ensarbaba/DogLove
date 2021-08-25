@@ -25,30 +25,20 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6Ss-YD-CXQ">
-                                <rect key="frame" x="192" y="433" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="Q6E-W5-Vep"/>
-                                    <constraint firstAttribute="height" constant="30" id="cMY-Q0-trS"/>
-                                </constraints>
-                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="zhm-bY-Lf7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1KE-Jf-v4f"/>
                             <constraint firstItem="zhm-bY-Lf7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="3iS-4h-Gzr"/>
-                            <constraint firstItem="6Ss-YD-CXQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="CoU-dJ-d3a"/>
                             <constraint firstItem="zhm-bY-Lf7" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hua-Sy-oHn"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BXI-29-oIY" secondAttribute="trailing" id="jz9-jc-QBN"/>
                             <constraint firstItem="BXI-29-oIY" firstAttribute="top" secondItem="zhm-bY-Lf7" secondAttribute="bottom" id="mT5-xt-Mjb"/>
-                            <constraint firstItem="6Ss-YD-CXQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n7D-aM-kGz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BXI-29-oIY" secondAttribute="bottom" constant="20" id="wgx-XQ-LMe"/>
                             <constraint firstItem="BXI-29-oIY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="y2M-wp-jy0"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="6Ss-YD-CXQ" id="iEe-Dz-KEr"/>
                         <outlet property="searchBar" destination="zhm-bY-Lf7" id="BcC-77-zxz"/>
                         <outlet property="tableView" destination="BXI-29-oIY" id="XNd-b3-dp8"/>
                     </connections>

@@ -34,7 +34,7 @@ private extension UIView {
         get {
             if let indicator: UIActivityIndicatorView = associatedObject(base: self, key: &spinnerKey) { return indicator }
             
-            let indicator = UIActivityIndicatorView(style: .gray)
+            let indicator = UIActivityIndicatorView(style: .medium)
             indicator.hidesWhenStopped = true
             indicator.translatesAutoresizingMaskIntoConstraints = false
             

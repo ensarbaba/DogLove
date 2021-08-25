@@ -18,13 +18,10 @@ class DogSearchController: UIViewController {
         case dog
     }
     
-    @IBOutlet weak private var tableView: UITableView!
-    @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak private var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var searchBar: UISearchBar!
     
-    private lazy var viewModel: DogSearchViewModel = {
-        return DogSearchViewModel()
-    }()
+    private lazy var viewModel = DogSearchViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +36,35 @@ class DogSearchController: UIViewController {
         tableView.registerCellWithReuseIdentifier(DogCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
-        activityIndicator.hidesWhenStopped = true
     }
+    
+    private func initViewModel() {
+        viewModel.viewHandler = { [weak self] (viewAction) in
+            guard let self = self else { return }
+            switch viewAction {
+            case .reloadData:
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .insertRows(let rows):
+                DispatchQueue.main.async {
+                    self.tableView.insertRows(at: rows, with: .automatic)
+                }
+            case .requestInProgress(let progress):
+                DispatchQueue.main.async {
+                    progress ? self.showActivityIndicator() : self.hideActivityIndicator()
+                }
+            case .showMessage(let message):
+                self.showAlert(message)
+            }
+        }
+    }
+    
+    @objc func searchFor() {
+        guard let searchText = searchBar.text else { return }
+        viewModel.searchDogs(for: searchText)
+    }
+    // MARK: UI Configuration
     private func addDoneButtonOnKeyboard(){
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
         doneToolbar.barStyle = .default
@@ -57,33 +81,6 @@ class DogSearchController: UIViewController {
     
     @objc func doneButtonAction(){
         searchBar.resignFirstResponder()
-    }
-    private func initViewModel() {
-        viewModel.viewHandler = { [weak self] (viewAction) in
-            guard let self = self else { return }
-            switch viewAction {
-            case .reloadData:
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            case .insertRows(let rows):
-                DispatchQueue.main.async {
-                    self.tableView.insertRows(at: rows, with: .automatic)
-                }
-            case .requestInProgress(let progress):
-                DispatchQueue.main.async {
-                    self.activityIndicator.isHidden = !progress
-                    progress ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
-                }
-            case .showMessage(let message):
-                self.showAlert(message)
-            }
-        }
-    }
-    
-    @objc func searchFor() {
-        guard let searchText = searchBar.text else { return }
-        viewModel.searchDogs(for: searchText)
     }
 }
 
@@ -146,7 +143,6 @@ extension DogSearchController: UITableViewDelegate {
 
 extension DogSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(searchFor), object: nil)
         self.perform(#selector(searchFor), with: nil, afterDelay: 1.5)
     }
