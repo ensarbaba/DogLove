@@ -21,7 +21,7 @@ class DogSearchController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var searchBar: UISearchBar!
     
-    private lazy var viewModel = DogSearchViewModel()
+    private lazy var viewModel = DogSearchViewModel(apiService: APIClient())
     
     override func viewDidLoad() {
         super.viewDidLoad()

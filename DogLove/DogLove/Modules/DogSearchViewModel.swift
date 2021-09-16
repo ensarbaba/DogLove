@@ -18,8 +18,11 @@ class DogSearchViewModel {
         case showMessage(_ message: String)
     }
     
-    private lazy var apiService = APIClient()
+    private var apiService: APIClientProtocol?
     
+    init(apiService: APIClientProtocol) {
+        self.apiService = apiService
+    }
     var viewHandler: ((ViewAction) -> Void)?
     
     private var isLoading: Bool = false {
@@ -44,7 +47,7 @@ class DogSearchViewModel {
         
         if self.isLoading { return }
         self.isLoading = true
-        apiService.searchDogs(params: parameters, method: .GET, endPoint: .search, completed: { [weak self] (result) in
+        apiService?.searchDogs(params: parameters, method: .GET, endPoint: .search, completed: { [weak self] (result) in
             guard let self = self else { return }
             defer { self.isLoading = false }
             switch result {

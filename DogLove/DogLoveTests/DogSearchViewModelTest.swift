@@ -16,7 +16,7 @@ class DogSearchViewModelTest: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
-        sut = DogSearchViewModel()
+        sut = DogSearchViewModel(apiService: APIClient())
     }
     
     override func tearDownWithError() throws {
@@ -28,7 +28,7 @@ class DogSearchViewModelTest: XCTestCase {
     func testFetchingItems() {
         
         let fetchExpectation = XCTestExpectation(description: "initial data fetched by search")
-        self.sut = DogSearchViewModel()
+        self.sut = DogSearchViewModel(apiService: APIClient())
         
         sut.viewHandler = { [weak self] viewAction in
             guard let self = self else {return}
