@@ -11,12 +11,12 @@ import XCTest
 class APIClientTest: XCTestCase {
    
     //Subject under Test
-    var sut: APIClient?
+    var sut: APIClientMock!
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
-        sut = APIClient()
+        sut = APIClientMock()
     }
     
     override func tearDownWithError() throws {
@@ -29,17 +29,16 @@ class APIClientTest: XCTestCase {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         // API Service Instance
-        let sut = self.sut!
         
         // When searching poiList
         let expect = XCTestExpectation(description: "callback")
-        let parameters: DogSearchRequest = ["q": "terrier", "limit": "5", "page": "0", "order": "DESC"]
+        let parameters: DogSearchRequest = ["q": "terrier", "limit": "1", "page": "0", "order": "DESC"]
      
-        sut.searchDogs(params: parameters, method: .GET, endPoint: .search) { (result) in
+        sut.searchDogs(params: parameters) { (result) in
             expect.fulfill()
             switch result {
             case .success(let response):
-                XCTAssertEqual(response.count, 5, "Limit parameter has given 5 therefore we are waiting 5 items")
+                XCTAssertEqual(response.count, 1, "Limit parameter has given 1 therefore we are waiting 1 items")
                 for item in response {
                     XCTAssertNotNil(item.id)
                     XCTAssertNotNil(item.url)
@@ -49,5 +48,11 @@ class APIClientTest: XCTestCase {
             }
         }
         wait(for: [expect], timeout: 10.0)
+    }
+}
+class APIClientMock: APIClientProtocol {
+    func searchDogs(params: DogSearchRequest, completion: @escaping (Result<DogSearchResponse, APIError>) -> Void) {
+        let item = DogSearchResponseElement(breeds: [], id: "", url: "", width: 0, height: 0)
+        completion(.success([item]))
     }
 }

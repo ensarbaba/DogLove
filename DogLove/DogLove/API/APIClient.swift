@@ -8,7 +8,7 @@
 import Foundation
 
 protocol APIClientProtocol: AnyObject {
-    func searchDogs(params: DogSearchRequest, method: APIMethod, endPoint: EndPoint, completed: @escaping (Result<DogSearchResponse, APIError>) -> Void)
+    func searchDogs(params: DogSearchRequest, completion: @escaping (Result<DogSearchResponse, APIError>) -> Void)
 }
 
 enum APIMethod: String {
@@ -42,17 +42,17 @@ class APIClient: APIClientProtocol {
      }
     
     /// API function for searching dogs by name
-    public func searchDogs(params: DogSearchRequest, method: APIMethod, endPoint: EndPoint, completed: @escaping (Result<DogSearchResponse, APIError>) -> Void) {
+    public func searchDogs(params: DogSearchRequest, completion: @escaping (Result<DogSearchResponse, APIError>) -> Void) {
 
         var urlComponents = self.urlComponents
-        urlComponents.path = endPoint.path
+        urlComponents.path = EndPoint.search.path
         urlComponents.setQueryItems(with: params)
     
         guard let url = urlComponents.url else {
-            completed(.failure(.urlError))
+            completion(.failure(.urlError))
             return
         }
-        call(url: url, method: .GET, completion: completed)
+        call(url: url, method: .GET, completion: completion)
     }
     
     /// Generic API call function
