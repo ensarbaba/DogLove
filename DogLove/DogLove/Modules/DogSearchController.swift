@@ -17,12 +17,19 @@ class DogSearchController: UIViewController {
     private enum Section: Int, CaseIterable {
         case dog
     }
-    
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var searchBar: UISearchBar!
-    
+    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let searchBar = UISearchBar()
+
     private lazy var viewModel = DogSearchViewModel(apiService: APIClient())
-    
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -30,32 +37,47 @@ class DogSearchController: UIViewController {
         addDoneButtonOnKeyboard()
     }
     
+ 
     private func configureUI() {
         searchBar.delegate = self
         searchBar.placeholder = "Search for a breed"
-        tableView.registerCellWithReuseIdentifier(DogCell.reuseIdentifier)
+        tableView.register(DogCell.self, forCellReuseIdentifier: DogCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+
+        view.addSubview(searchBar)
+        view.addSubview(tableView)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
-    
+
     private func initViewModel() {
-        viewModel.viewHandler = { [weak self] (viewAction) in
-            guard let self = self else { return }
-            switch viewAction {
-            case .reloadData:
-                DispatchQueue.main.async {
+        viewModel.viewHandler = { (viewAction) in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                switch viewAction {
+                case .reloadData:
                     self.tableView.reloadData()
-                }
-            case .insertRows(let rows):
-                DispatchQueue.main.async {
+
+                case .insertRows(let rows):
                     self.tableView.insertRows(at: rows, with: .automatic)
-                }
-            case .requestInProgress(let progress):
-                DispatchQueue.main.async {
+
+                case .requestInProgress(let progress):
                     progress ? self.showActivityIndicator() : self.hideActivityIndicator()
+
+                case .showMessage(let message):
+                    self.showAlert(message)
                 }
-            case .showMessage(let message):
-                self.showAlert(message)
             }
         }
     }
@@ -99,8 +121,10 @@ extension DogSearchController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section) {
         case .dog:
-            guard let data = viewModel.getDogData(at: indexPath.row) else { return UITableViewCell() }
-            let cell = tableView.dequeue(cell: DogCell.self, indexPath: indexPath)
+            guard let data = viewModel.getDogData(at: indexPath.row),
+                  let cell = tableView.dequeueReusableCell(withIdentifier: DogCell.reuseIdentifier, for: indexPath) as? DogCell else {
+                return UITableViewCell()
+            }
             cell.update(with: data)
             return cell
         case .none:
