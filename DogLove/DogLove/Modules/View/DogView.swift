@@ -39,7 +39,9 @@ class DogView: UIView {
     }
 
     func update(with item: DogSearchResponseElement) {
-        imageView.loadImageAsync(with: item.url)
+        Task {
+            await imageView.loadImageAsync(with: item.url)
+        }
     }
 
     func reuseCellCalled() {

@@ -17,8 +17,9 @@ extension UIView {
     }
 }
 // MARK: - Spinner related extensions
-
-private var spinnerKey: UInt8 = 0
+/// We've now indicated to the compiler we're taking responsibility ourselves
+/// regarding thread-safety access of this global variable.
+nonisolated(unsafe) fileprivate var spinnerKey: UInt8 = 0
 
 private extension UIView {
     

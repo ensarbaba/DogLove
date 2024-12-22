@@ -28,7 +28,6 @@
 		ECBD032726C853FC00601966 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBD032626C853FC00601966 /* UIImageView+Extension.swift */; };
 		ECBD032926C8542900601966 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBD032826C8542900601966 /* ImageCache.swift */; };
 		ECECF24F26737B9E00D1982F /* AssociatedObjectHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECECF24E26737B9E00D1982F /* AssociatedObjectHelpers.swift */; };
-		FC149C862D18B7E70013D8AB /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC149C852D18B7E70013D8AB /* HomeTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +75,6 @@
 		ECBD032626C853FC00601966 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		ECBD032826C8542900601966 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		ECECF24E26737B9E00D1982F /* AssociatedObjectHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedObjectHelpers.swift; sourceTree = "<group>"; };
-		FC149C852D18B7E70013D8AB /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,7 +135,6 @@
 		EC863B3D256A9B8B009602D6 /* DogLove */ = {
 			isa = PBXGroup;
 			children = (
-				FC149C842D18B7C70013D8AB /* TabBar */,
 				ECECF24D26737B7200D1982F /* Helpers */,
 				EC863B71256A9B92009602D6 /* API */,
 				EC863B75256A9B9F009602D6 /* AppDelegate */,
@@ -249,14 +246,6 @@
 				ECECF24E26737B9E00D1982F /* AssociatedObjectHelpers.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		FC149C842D18B7C70013D8AB /* TabBar */ = {
-			isa = PBXGroup;
-			children = (
-				FC149C852D18B7E70013D8AB /* HomeTabBarController.swift */,
-			);
-			path = TabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,7 +390,6 @@
 				ECBD032926C8542900601966 /* ImageCache.swift in Sources */,
 				EC863BB5256C3FBF009602D6 /* DogView.swift in Sources */,
 				EC863B8E256ACE1B009602D6 /* APIClient.swift in Sources */,
-				FC149C862D18B7E70013D8AB /* HomeTabBarController.swift in Sources */,
 				EC863B9C256ACFA2009602D6 /* APIError.swift in Sources */,
 				ECBD032726C853FC00601966 /* UIImageView+Extension.swift in Sources */,
 				EC863BCC256C5243009602D6 /* UIView+Extensions.swift in Sources */,
@@ -583,7 +571,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ensarbaba.DogLove;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -603,7 +591,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ensarbaba.DogLove;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

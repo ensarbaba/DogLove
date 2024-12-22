@@ -4,9 +4,9 @@
 //
 //  Created by M. Ensar Baba on 14.08.2021.
 //
-
 import UIKit
 
+@MainActor
 extension UIImageView {
 
     private static var taskKey: UInt8 = 0
@@ -22,70 +22,63 @@ extension UIImageView {
         set { associateObject(base: self, key: &UIImageView.urlKey, value: newValue) }
     }
 
-    func loadImageAsync(with urlString: String?) {
-        self.startSpinner()
-        
-        // cancel prior task, if any
-        weak var oldTask = currentTask
-        currentTask = nil
-        oldTask?.cancel()
+    func loadImageAsync(with urlString: String?) async {
+        startSpinner()
 
-        // reset imageview's image
+        // Cancel prior task, if any
+        if let oldTask = currentTask {
+            oldTask.cancel()
+            currentTask = nil
+        }
 
+        // Reset imageview's image
         self.image = nil
 
-        // allow supplying of `nil` to remove old image and then return immediately
-
-        guard let urlString = urlString else { self.stopSpinner(); return }
-
-        // check cache
-
-        if let cachedImage = ImageCache.shared.image(forKey: urlString) {
-            self.image = cachedImage
-            self.stopSpinner()
+        // Allow supplying of `nil` to remove old image and then return immediately
+        guard let urlString = urlString else {
+            stopSpinner()
             return
         }
 
-        // download
-
-        guard let url = URL(string: urlString) else { self.stopSpinner(); return }
-        currentURL = url
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            self?.currentTask = nil
-
-            //error handling
-
-            if let error = error {
-                // don't bother reporting cancelation errors
-
-                if (error as NSError).domain == NSURLErrorDomain && (error as NSError).code == NSURLErrorCancelled {
-                    return
-                }
-                self?.stopSpinner()
-                print(error)
-                return
-            }
-
-            guard let data = data, let downloadedImage = UIImage(data: data) else {
-                print("unable to extract image")
-                self?.stopSpinner()
-                return
-            }
-
-            ImageCache.shared.save(image: downloadedImage, forKey: urlString)
-
-            if url == self?.currentURL {
-                DispatchQueue.main.async {
-                    self?.stopSpinner()
-                    self?.image = downloadedImage
-                }
-            }
+        // Check cache
+        if let cachedImage = await ImageCache.shared.image(forKey: urlString) {
+            self.image = cachedImage
+            stopSpinner()
+            return
         }
 
-        // save and start new task
+        // Download
+        guard let url = URL(string: urlString) else {
+            stopSpinner()
+            return
+        }
 
-        currentTask = task
-        task.resume()
+        currentURL = url
+
+        do {
+            let (data, _) = try await URLSession.shared.data(for: URLRequest(url: url))
+
+            guard let downloadedImage = UIImage(data: data) else {
+                debugPrint("unable to extract image")
+                stopSpinner()
+                return
+            }
+
+            await ImageCache.shared.save(image: downloadedImage, forKey: urlString)
+
+            // Check if the URL hasn't changed during download
+            if url == currentURL {
+                self.image = downloadedImage
+                stopSpinner()
+            }
+
+        } catch let error as NSError {
+            // Don't bother reporting cancelation errors
+            if error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
+                return
+            }
+            debugPrint(error)
+            stopSpinner()
+        }
     }
-
 }

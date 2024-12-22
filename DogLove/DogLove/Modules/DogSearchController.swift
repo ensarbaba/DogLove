@@ -32,6 +32,7 @@ class DogSearchController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         configureUI()
         initViewModel()
         addDoneButtonOnKeyboard()
@@ -84,8 +85,11 @@ class DogSearchController: UIViewController {
     
     @objc func searchFor() {
         guard let searchText = searchBar.text else { return }
-        viewModel.searchDogs(for: searchText)
+        Task {
+            await viewModel.searchDogs(for: searchText)
+        }
     }
+    
     // MARK: UI Configuration
     private func addDoneButtonOnKeyboard(){
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
@@ -142,7 +146,9 @@ extension DogSearchController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if viewModel.hasNeedToFetchMoreDog && viewModel.dogsRowCount == indexPath.row + 1  {
             guard let searchText = searchBar.text else { return }
-                viewModel.searchDogs(for: searchText)
+            Task {
+                await viewModel.searchDogs(for: searchText)
+            }
         }
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
