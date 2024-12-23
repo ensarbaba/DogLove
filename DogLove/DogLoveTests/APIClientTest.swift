@@ -25,34 +25,24 @@ class APIClientTest: XCTestCase {
         super.tearDown()
     }
     
-    func testItemsFetching() throws {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // API Service Instance
-        
-        // When searching poiList
+    func testItemsFetching() async throws {
         let expect = XCTestExpectation(description: "callback")
         let parameters: DogSearchRequest = ["q": "terrier", "limit": "1", "page": "0", "order": "DESC"]
-     
-        sut.searchDogs(params: parameters) { (result) in
+        let response = try await sut.searchDogs(params: parameters)
+
+        XCTAssertEqual(response.count, 1, "Limit parameter has given 1 therefore we are waiting 1 items")
+
+        for item in response {
             expect.fulfill()
-            switch result {
-            case .success(let response):
-                XCTAssertEqual(response.count, 1, "Limit parameter has given 1 therefore we are waiting 1 items")
-                for item in response {
-                    XCTAssertNotNil(item.id)
-                    XCTAssertNotNil(item.url)
-                }
-            case .failure(let error):
-                XCTAssertNotNil(error.rawValue)
-            }
+            XCTAssertNotNil(item.id)
+            XCTAssertNotNil(item.url)
         }
-        wait(for: [expect], timeout: 10.0)
+        await fulfillment(of: [expect], timeout: 2.0)
     }
 }
 class APIClientMock: APIClientProtocol {
-    func searchDogs(params: DogSearchRequest, completion: @escaping (Result<DogSearchResponse, APIError>) -> Void) {
+    func searchDogs(params: DogLove.DogSearchRequest) async throws -> DogLove.DogSearchResponse {
         let item = DogSearchResponseElement(breeds: [], id: "", url: "", width: 0, height: 0)
-        completion(.success([item]))
+        return [item]
     }
 }

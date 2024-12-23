@@ -8,6 +8,7 @@
 import XCTest
 @testable import DogLove
 
+@MainActor
 class DogSearchViewModelTest: XCTestCase {
     //Subject under Test
     var sut: DogSearchViewModel!
@@ -48,14 +49,9 @@ class DogSearchViewModelTest: XCTestCase {
                 break
             }
         }
-        
-        sut.searchDogs(for: "terrier")
-        wait(for: [fetchExpectation], timeout: 10.0)
-    }
-    func testPerformanceExample() throws {
-        self.measure {
-            sut.searchDogs(for: "terrier")
+        Task {
+            await sut.searchDogs(for: "terrier")
         }
+        wait(for: [fetchExpectation], timeout: 2.0)
     }
-    
 }
