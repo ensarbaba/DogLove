@@ -9,7 +9,7 @@ import UIKit
 actor ImageCache {
     public let cache: NSCache<NSString, UIImage> = {
         let cache = NSCache<NSString, UIImage>()
-        cache.totalCostLimit = 50*1024*1024
+        cache.countLimit = 10
         return cache
     }()
     
