@@ -12,7 +12,7 @@ extension UIImageView {
     private static var taskKey: UInt8 = 0
     private static var urlKey: UInt8  = 0
 
-    private var currentTask: URLSessionTask? {
+    private var currentTask: Task<Void, Never>? {
         get { associatedObject(base: self, key: &UIImageView.taskKey) }
         set { associateObject(base: self, key: &UIImageView.taskKey, value: newValue) }
     }
@@ -40,14 +40,6 @@ extension UIImageView {
             return
         }
 
-        // Check cache
-        if let cachedImage = await ImageCache.shared.image(forKey: urlString) {
-            self.image = cachedImage
-            stopSpinner()
-            return
-        }
-
-        // Download
         guard let url = URL(string: urlString) else {
             stopSpinner()
             return
@@ -55,30 +47,41 @@ extension UIImageView {
 
         currentURL = url
 
-        do {
-            let (data, _) = try await URLSession.shared.data(for: URLRequest(url: url))
-
-            guard let downloadedImage = UIImage(data: data) else {
-                debugPrint("unable to extract image")
+        // Create and start a new task
+        let task = Task {
+            // Check cache
+            if let cachedImage = await ImageCache.shared.image(forKey: urlString) {
+                self.image = cachedImage
                 stopSpinner()
                 return
             }
 
-            await ImageCache.shared.save(image: downloadedImage, forKey: urlString)
+            do {
+                let (data, _) = try await URLSession.shared.data(for: URLRequest(url: url))
 
-            // Check if the URL hasn't changed during download
-            if url == currentURL {
-                self.image = downloadedImage
+                guard let downloadedImage = UIImage(data: data) else {
+                    debugPrint("unable to extract image")
+                    stopSpinner()
+                    return
+                }
+
+                await ImageCache.shared.save(image: downloadedImage, forKey: urlString)
+
+                // Check if the URL hasn't changed during download
+                if url == currentURL {
+                    self.image = downloadedImage
+                    stopSpinner()
+                }
+
+            } catch let error as NSError {
+                // Don't bother reporting cancelation errors
+                if error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
+                    return
+                }
+                debugPrint(error)
                 stopSpinner()
             }
-
-        } catch let error as NSError {
-            // Don't bother reporting cancelation errors
-            if error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
-                return
-            }
-            debugPrint(error)
-            stopSpinner()
         }
+        currentTask = task
     }
 }
